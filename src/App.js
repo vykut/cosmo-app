@@ -45,8 +45,6 @@ const rrfProps = {
 
 const theme = {
   ...DefaultTheme,
-  // Specify custom property
-  // Specify custom property in nested object
   colors: {
     ...DefaultTheme.colors,
     primary: '#32ACAD',
@@ -62,7 +60,7 @@ export default function App() {
   return (
     <Provider store={store}>
       <ReactReduxFirebaseProvider {...rrfProps}>
-        <PaperProvider>
+        <PaperProvider theme={theme}>
           <CartProvider>
             <MainComponent />
           </CartProvider>
@@ -71,20 +69,3 @@ export default function App() {
     </Provider>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#f7ffff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  button: {
-    borderStyle: 'solid',
-    borderColor: '#000',
-    borderWidth: 10,
-    backgroundColor: '#fff',
-    height: 100,
-    marginTop: 200
-  },
-});

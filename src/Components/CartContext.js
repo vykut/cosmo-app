@@ -74,19 +74,21 @@ export function CartProvider({ children }) {
         }
     }, [auth, firestore,])
 
-    const addProductToCart = async (productID, price, quantity) => {
+    const addProductToCart = async (productID, price, quantity = 1) => {
+        let productTotalPrice = price * quantity
+
         if (isEmpty(auth)) {
             setCart({
                 ...cart,
                 products: {
                     ...cart.products,
                     [productID]: {
-                        price: cart.products && cart.products[productID] ? price * quantity + cart.products[productID].price : price * quantity,
+                        price: cart.products && cart.products[productID] ? productTotalPrice + cart.products[productID].price : productTotalPrice,
                         quantity: cart.products && cart.products[productID] ? quantity + cart.products[productID].quantity : quantity
                     }
                 },
                 quantity: cart.quantity + quantity,
-                totalPrice: cart.totalPrice + price * quantity
+                totalPrice: cart.totalPrice + productTotalPrice
             })
         } else {
             try {

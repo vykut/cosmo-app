@@ -1,36 +1,25 @@
 import React from 'react'
-import { View, StyleSheet, SafeAreaView } from 'react-native'
+import { View, StyleSheet, SafeAreaView, ScrollView } from 'react-native'
 import { Text } from 'react-native-paper'
 import CategoriesRow from './CategoriesRow';
 import { useMarketContext } from './MarketContext/MarketContext';
-import ProductsRow from './ProductsRow';
+import ProductsRow from '../ProductComponents/ProductsRow';
 
-export default function MarketView({ navigation }) {
-
+export default function MarketView() {
     const marketContext = useMarketContext()
 
     return (
         <View style={styles.mainContainer}>
-            <CategoriesRow />
-            <ProductsRow products={marketContext.recentProducts} />
-            {/* <ProductsRow category={categories.meals} /> */}
-            {/* <ProductsRow category={categories.cigars} /> */}
+            <ScrollView showsVerticalScrollIndicator={false}>
+                {marketContext.categoriesRows.map((categoryRow, index) => <CategoriesRow {...categoryRow} key={index} />)}
+                {marketContext.productsRows.map((productRow, index) => <ProductsRow {...productRow} key={index} />)}
+            </ScrollView>
         </View>
     )
 }
 
 const styles = StyleSheet.create({
     mainContainer: {
-        flex: 1,
-        // alignItems: 'center',
-        // justifyContent: 'center',
-    },
-    button: {
-        borderStyle: 'solid',
-        borderColor: '#000',
-        borderWidth: 10,
-        backgroundColor: '#fff',
-        height: 100,
-        marginTop: 200
+
     },
 });

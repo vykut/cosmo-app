@@ -9,9 +9,35 @@ export function useMarketContext() {
     return useContext(MarketContext)
 }
 
-export default function MarketProvider({ children }) {
-    const [recentProducts, setRecentProducts] = useState([])
 
+
+export default function MarketProvider({ children }) {
+    // const [recentProducts, setRecentProducts] = useState([])
+    const [searchQuery, setSearchQuery] = useState('')
+
+    useFirestoreConnect({
+        collection: 'categories',
+        where: [['enabled', '==', true]]
+    })
+
+    const categories = useSelector(
+        ({ firestore }) => firestore.data.categories && Object.entries(firestore.data.categories)
+            .map((category) => { return { id: category[0], data: category[1] } })
+    )
+
+    const mainCategories = isEmpty(categories) ? [] : categories.filter((category) => category.data.mainCategory)
+
+    const getChildrenCategories = (category) => {
+        if (category.data.childrenCategories) {
+            return categories.filter((childrenCategory) => category.data.childrenCategories.includes(childrenCategory.id))
+        }
+    }
+
+    const getParentCategories = (category) => {
+        if (category.data.parentCategories) {
+            return categories.filter((parentCategory) => category.data.parentCategories.includes(parentCategory.id))
+        }
+    }
 
     useFirestoreConnect({
         collection: 'products',
@@ -23,24 +49,56 @@ export default function MarketProvider({ children }) {
             .map((product) => { return { id: product[0], data: product[1] } })
     )
 
-    useEffect(() => {
-        console.log(products)
-        if (!isEmpty(products)) {
-            setRecentProducts([...products].sort((a, b) => {
-                // console.log(a.data.createdAt > b.data.createdAt)
-                if (a.data.createdAt >= b.data.createdAt)
-                    return -1
-                return 1
-            }))
+    const recentProducts = isEmpty(products) ? [] : [...products].sort((a, b) => {
+        if (a.data.createdAt >= b.data.createdAt)
+            return -1
+        return 1
+    })
+
+    const mealsCategory = !isEmpty(categories) && categories.find((category) => category.id === 'emgqRnkMcrfiM24JI3i6')
+    const meals = isEmpty(products) ? [] : products.filter((product) => product.data.categories.includes(mealsCategory.id))
+
+    const cigarettesCategory = !isEmpty(categories) && categories.find((category) => category.id === 'KIdyISkEMmATZsnAhYpk')
+    const cigarettes = isEmpty(products) ? [] : products.filter((product) => product.data.categories.includes(cigarettesCategory.id))
+
+    const categoriesRows = [
+        {
+            title: 'Categorii',
+            categories: mainCategories,
+            products: isEmpty(products) ? [] : products,
         }
-    }, [products])
+    ]
+
+    const productsRows = [
+        {
+            title: 'Recent adăugate în Cosmo Market',
+            products: recentProducts,
+        },
+        {
+            category: mealsCategory,
+            products: meals,
+        },
+        {
+            category: cigarettesCategory,
+            products: cigarettes,
+        },
+    ]
+
+
 
     const value = {
         //vars
+        categories,
+        mainCategories,
         products,
         recentProducts,
+        meals,
+        categoriesRows,
+        productsRows,
 
         //functions
+        getChildrenCategories,
+        getParentCategories,
     }
 
     return (

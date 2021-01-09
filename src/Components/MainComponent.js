@@ -7,8 +7,8 @@ import ProfileStackNavigation from './ProfileComponents/ProfileStackNavigation';
 import { MaterialCommunityIcons } from '@expo/vector-icons'
 import { bottomTabStyle, colors } from '../utils';
 import { useCartContext } from './CartContext';
-import { useFirebase } from 'react-redux-firebase'
 import { useSelector } from 'react-redux'
+import { isLoaded } from 'react-redux-firebase'
 
 const cosmoTheme = {
     ...DefaultTheme,
@@ -23,6 +23,10 @@ const Tab = createBottomTabNavigator();
 
 export default function MainComponent() {
     const cartContext = useCartContext()
+    const auth = useSelector(state => state.firebase.auth)
+
+    if (!isLoaded(auth))
+        return null
 
     return (
         <NavigationContainer theme={cosmoTheme} >
