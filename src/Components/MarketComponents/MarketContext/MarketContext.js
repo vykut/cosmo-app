@@ -9,11 +9,7 @@ export function useMarketContext() {
     return useContext(MarketContext)
 }
 
-
-
 export default function MarketProvider({ children }) {
-    // const [recentProducts, setRecentProducts] = useState([])
-    const [searchQuery, setSearchQuery] = useState('')
 
     useFirestoreConnect({
         collection: 'categories',
@@ -39,17 +35,19 @@ export default function MarketProvider({ children }) {
         }
     }
 
-    useFirestoreConnect({
+    useFirestoreConnect([{
         collection: 'products',
-        where: [['enabled', '==', true], ['stock', '==', true]]
-    })
+        where: [['enabled', '==', true], ['stock', '==', true]],
+        orderBy: [['name', 'asc']],
+    }])
 
     const products = useSelector(
-        ({ firestore }) => firestore.data.products && Object.entries(firestore.data.products)
+        ({ firestore }) => firestore.data.products && Object.entries(firestore.data.products).filter(x => x[1])
             .map((product) => { return { id: product[0], data: product[1] } })
     )
 
     const recentProducts = isEmpty(products) ? [] : [...products].sort((a, b) => {
+
         if (a.data.createdAt >= b.data.createdAt)
             return -1
         return 1

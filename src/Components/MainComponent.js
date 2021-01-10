@@ -1,23 +1,16 @@
 import React from 'react'
 import { NavigationContainer, DefaultTheme } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import MarketStackNavigation from './MarketComponents/MarketStackNavigation';
 import CartStackNavigation from './CartComponents/CartStackNavigation';
 import ProfileStackNavigation from './ProfileComponents/ProfileStackNavigation';
 import { MaterialCommunityIcons } from '@expo/vector-icons'
-import { bottomTabStyle, colors } from '../utils';
+import { bottomTabStyle, colors, cosmoTheme } from '../utils';
 import { useCartContext } from './CartContext';
 import { useSelector } from 'react-redux'
 import { isLoaded } from 'react-redux-firebase'
+import MarketModalNavigation from './MarketComponents/MarketModalNavigation';
 
-const cosmoTheme = {
-    ...DefaultTheme,
-    colors: {
-        ...DefaultTheme.colors,
-        primary: colors.accent,
-        background: colors.background,
-    },
-};
+
 
 const Tab = createBottomTabNavigator();
 
@@ -31,7 +24,7 @@ export default function MainComponent() {
     return (
         <NavigationContainer theme={cosmoTheme} >
             <Tab.Navigator tabBarOptions={bottomTabStyle}>
-                <Tab.Screen name="Market" component={MarketStackNavigation} options={{
+                <Tab.Screen name="Market" component={MarketModalNavigation} options={{
                     tabBarIcon: ({ color, size, ...props }) => {
                         return <MaterialCommunityIcons name='storefront-outline' size={size} color={color} />
                     }

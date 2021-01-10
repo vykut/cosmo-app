@@ -12,6 +12,7 @@ export default function CategoryChip({ category, selected }) {
 
     const seeProducts = () => {
         navigation.push('Products', {
+            ...route.params,
             currentCategory: category,
         })
     }

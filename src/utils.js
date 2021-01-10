@@ -4,6 +4,8 @@ import 'firebase/firestore'
 import 'firebase/functions'
 import 'firebase/storage'
 import { firebaseConfig } from './FirebaseConfig'
+import { DefaultTheme } from '@react-navigation/native';
+
 
 
 export const app = firebase.initializeApp(firebaseConfig)
@@ -22,12 +24,21 @@ export const colors = {
     background: '#F7FFFF',
 }
 
+export const cosmoTheme = {
+    ...DefaultTheme,
+    colors: {
+        ...DefaultTheme.colors,
+        primary: colors.accent,
+        background: colors.background,
+    },
+};
+
 export const stackHeaderStyle = {
     headerStyle: {
-        backgroundColor: '#32ACAD'
+        backgroundColor: colors.primary
     },
     headerTitleStyle: {
-        color: '#FFFFFF'
+        color: colors.lightText
     }
 }
 

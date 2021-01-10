@@ -53,6 +53,7 @@ const theme = {
     error: '#DE512B',
     success: '#55DF99',
     text: '#1E1E1E',
+    lightText: '#FFFFFF',
   }
 };
 
