@@ -3,7 +3,6 @@ import { ScrollView, View, StyleSheet } from 'react-native'
 import { Text, Searchbar, useTheme, IconButton } from 'react-native-paper'
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { useMarketContext } from './MarketContext/MarketContext';
-import CategoryChip from './CategoryChip';
 import CategoriesList from './CategoriesList';
 import ProductsList from './ProductsList';
 import { colors } from '../../utils';
@@ -15,21 +14,6 @@ export default function ProductsView() {
     const marketContext = useMarketContext()
     const theme = useTheme()
     var products
-
-    if (route.params.currentCategory)
-        products = marketContext.products.filter((product) => product.data.categories.includes(route.params.currentCategory.id))
-    else
-        products = marketContext.products || []
-
-    if (products.length && route.params.searchQuery) {
-        products = products.filter((product) => product.data && product.data.name.normalize("NFD").replace(/[\u0300-\u036f]/g, "").includes(route.params.searchQuery))
-    }
-
-    if (route.params.filter) {
-        if (route.params.filter.price) {
-            products = products.filter((product) => product.data && product.data.price >= route.params.filter.price[0] && product.data.price <= route.params.filter.price[1])
-        }
-    }
 
     useLayoutEffect(() => {
         const filter = () => {
@@ -52,6 +36,61 @@ export default function ProductsView() {
             navigation.setOptions({ title: 'Toate produsele' })
         }
     }, [navigation, route.params.currentCategory])
+
+    if (route.params.currentCategory)
+        products = marketContext.products.filter((product) => product.data.categories.includes(route.params.currentCategory.id))
+    else
+        products = marketContext.products || []
+
+    if (route.params.filter) {
+        if (route.params.filter.price) {
+            products = products.filter((product) => product.data && product.data.price >= route.params.filter.price[0] && product.data.price <= route.params.filter.price[1])
+        }
+    }
+
+    if (products.length && route.params.searchQuery) {
+        products = products.filter((product) => product.data && product.data.name.normalize("NFD").replace(/[\u0300-\u036f]/g, "").includes(route.params.searchQuery))
+    }
+
+    console.log(route.params.sort)
+
+    if (route.params.sort) {
+        switch (route.params.sort) {
+            case 1:
+                products.sort((a, b) => {
+                    if (a.data.createdAt < b.data.createdAt)
+                        return 1
+                    if (a.data.createdAt > b.data.createdAt)
+                        return -1
+                    return 0
+                })
+                break
+            case 2:
+                products.sort((a, b) => a.data.price - b.data.price)
+                break
+            case 3:
+                products.sort((a, b) => b.data.price - a.data.price)
+                break
+            case 4:
+                products.sort((a, b) => {
+                    if (a.data.name < b.data.name)
+                        return -1
+                    if (a.data.name > b.data.name)
+                        return 1
+                    return 0
+                })
+                break
+            case 5:
+                products.sort((a, b) => {
+                    if (a.data.name < b.data.name)
+                        return 1
+                    if (a.data.name > b.data.name)
+                        return -1
+                    return 0
+                })
+                break
+        }
+    }
 
     return (
         <View>

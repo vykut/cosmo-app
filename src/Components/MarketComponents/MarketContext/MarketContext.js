@@ -64,6 +64,7 @@ export default function MarketProvider({ children }) {
             title: 'Categorii',
             categories: mainCategories,
             products: isEmpty(products) ? [] : products,
+            sort: 4,
         }
     ]
 
@@ -71,14 +72,17 @@ export default function MarketProvider({ children }) {
         {
             title: 'Recent adăugate în Cosmo Market',
             products: recentProducts,
+            sort: 1,
         },
         {
             category: mealsCategory,
             products: meals,
+            sort: 4,
         },
         {
             category: cigarettesCategory,
             products: cigarettes,
+            sort: 4,
         },
     ]
 

@@ -8,7 +8,7 @@ import { useNavigation, useRoute } from '@react-navigation/native';
 
 const numberOfProducts = 5
 
-export default function ProductsRow({ products, category, title }) {
+export default function ProductsRow({ products, category, title, sort }) {
     const navigation = useNavigation()
     const theme = useTheme()
 
@@ -16,7 +16,7 @@ export default function ProductsRow({ products, category, title }) {
         return <ProgressBar indeterminate color={theme.colors.primary} />
 
     return (
-        <RowContainer title={title} category={category} products={products} navigation={navigation}>
+        <RowContainer title={title} category={category} products={products} navigation={navigation} sort={sort}>
             {products.slice(0, numberOfProducts).map((product) => <ProductBox key={product.id} product={product} />)}
         </RowContainer>
     )

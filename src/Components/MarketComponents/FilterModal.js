@@ -3,6 +3,7 @@ import { ScrollView, View, StyleSheet } from 'react-native'
 import { useNavigation, useRoute } from '@react-navigation/native'
 import { Text, Headline, Title, Subheading, Button, useTheme } from 'react-native-paper'
 import PriceFilter from './PriceFilter'
+import SortProducts from './SortProducts'
 
 export default function FilterModal() {
     const navigation = useNavigation()
@@ -43,7 +44,7 @@ export default function FilterModal() {
         {
             title: 'Preț',
             TextComponent: Title,
-            children: <PriceFilter />,
+            children: [<PriceFilter key='price' />],
             filterName: 'price',
         }
     ]
@@ -56,7 +57,7 @@ export default function FilterModal() {
         }, {
             title: 'Sortează',
             TextComponent: Headline,
-            children: null,
+            children: <SortProducts />,
         }
     ]
 

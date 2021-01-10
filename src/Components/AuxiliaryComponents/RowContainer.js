@@ -4,13 +4,14 @@ import { ProgressBar, Text, Headline, Subheading, Button, useTheme } from 'react
 import { colors } from '../../utils'
 import { useMarketContext } from '../MarketComponents/MarketContext/MarketContext'
 
-export default function RowContainer({ children, navigation, category, title }) {
+export default function RowContainer({ children, navigation, category, title, sort }) {
     const theme = useTheme()
     const marketContext = useMarketContext()
 
     const seeAll = () => {
         navigation.navigate('Products', {
             currentCategory: category,
+            sort,
         })
     }
 

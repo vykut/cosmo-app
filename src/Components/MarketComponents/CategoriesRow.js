@@ -6,7 +6,7 @@ import { ProgressBar, Text, Headline, Subheading, Button, useTheme } from 'react
 import { useRoute, useNavigation } from '@react-navigation/native'
 import { useMarketContext } from './MarketContext/MarketContext'
 
-export default function CategoriesRow({ categories, products }) {
+export default function CategoriesRow({ categories, products, sort }) {
     const navigation = useNavigation()
     const route = useRoute()
     const theme = useTheme()
@@ -16,7 +16,7 @@ export default function CategoriesRow({ categories, products }) {
         return <ProgressBar indeterminate color={theme.colors.primary} />
 
     return (
-        <RowContainer title='Categorii' products={products} navigation={navigation}>
+        <RowContainer title='Categorii' products={products} navigation={navigation} sort={sort}>
             {categories.map((category) => <CategoryChip
                 key={category.id}
                 products={products.filter((product) => product.data.categories.includes(category.id))}
