@@ -15,6 +15,7 @@ import { DefaultTheme, Provider as PaperProvider } from 'react-native-paper';
 import MainComponent from './Components/MainComponent';
 import { app } from './utils';
 import { CartProvider } from './Components/CartContext';
+import MarketProvider from './Components/MarketComponents/MarketContext/MarketContext';
 
 const rrfConfig = {
   userProfile: 'users',
@@ -62,9 +63,11 @@ export default function App() {
     <Provider store={store}>
       <ReactReduxFirebaseProvider {...rrfProps}>
         <PaperProvider theme={theme}>
-          <CartProvider>
-            <MainComponent />
-          </CartProvider>
+          <MarketProvider>
+            <CartProvider>
+              <MainComponent />
+            </CartProvider>
+          </MarketProvider>
         </PaperProvider>
       </ReactReduxFirebaseProvider>
     </Provider>

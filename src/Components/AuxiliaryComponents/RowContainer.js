@@ -41,7 +41,8 @@ const styles = StyleSheet.create({
         marginLeft: 8,
         flex: 1,
         flexDirection: 'row',
-        justifyContent: 'space-between'
+        justifyContent: 'space-between',
+        flexWrap: 'wrap'
     },
     scrollView: {
         paddingVertical: 4,

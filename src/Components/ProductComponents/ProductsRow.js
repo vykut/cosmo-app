@@ -16,7 +16,7 @@ export default function ProductsRow({ products, category, title, sort }) {
         return <ProgressBar indeterminate color={theme.colors.primary} />
 
     return (
-        <RowContainer title={title} category={category} products={products} navigation={navigation} sort={sort}>
+        <RowContainer title={title} category={category} navigation={navigation} sort={sort}>
             {products.slice(0, numberOfProducts).map((product) => <ProductBox key={product.id} product={product} />)}
         </RowContainer>
     )

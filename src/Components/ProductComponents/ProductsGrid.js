@@ -1,9 +1,9 @@
 import React from 'react'
 import { View, StyleSheet } from 'react-native'
 import { Text } from 'react-native-paper'
-import ProductBox from '../ProductComponents/ProductBox'
+import ProductBox from './ProductBox'
 
-export default function ProductsList({ products }) {
+export default function ProductsGrid({ products }) {
 
     if (!products.length) {
         return <View style={{ marginLeft: 8 }}>

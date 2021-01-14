@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { View, StyleSheet } from 'react-native'
-import { Text, Subheading } from 'react-native-paper'
+import { Text, Subheading, useTheme } from 'react-native-paper'
 import MultiSlider from '@ptomasroos/react-native-multi-slider'
 import { useRoute, useNavigation } from '@react-navigation/native'
 import { useMarketContext } from './MarketContext/MarketContext'
@@ -13,6 +13,7 @@ export default function PriceFilter() {
     const [maxPrice, setMaxPrice] = useState(350)
     const [labelPrice, setLabelPrice] = useState(route.params?.filter?.price)
     const window = useWindowDimensions()
+    const theme = useTheme()
 
     var price = route.params?.filter?.price
 
@@ -62,6 +63,8 @@ export default function PriceFilter() {
                 onValuesChangeFinish={setPriceFilter}
                 onValuesChange={setPriceLabels}
                 sliderLength={window.width - 64}
+                selectedStyle={{ backgroundColor: theme.colors.accent }}
+                unselectedStyle={{ backgroundColor: theme.colors.disabled }}
             />
             <View style={styles.labels} >
                 <Subheading>

@@ -11,8 +11,10 @@ import { Button } from 'react-native'
 const MarketModalStack = createStackNavigator();
 
 
-export default function MarketModalNavigation() {
+export default function MarketModalNavigation(props) {
     const theme = useTheme()
+
+    // console.log(props, 'modal nav')
 
     function headerActions({ navigation, route }) {
         return {
@@ -22,11 +24,9 @@ export default function MarketModalNavigation() {
     }
 
     return (
-        <MarketProvider>
-            <MarketModalStack.Navigator mode='modal' screenOptions={stackHeaderStyle}>
-                <MarketModalStack.Screen name='MarketStack' component={MarketStackNavigation} options={{ headerShown: false }} />
-                <MarketModalStack.Screen name='FilterModal' component={FilterModal} options={headerActions} />
-            </MarketModalStack.Navigator>
-        </MarketProvider>
+        <MarketModalStack.Navigator mode='modal' screenOptions={stackHeaderStyle}>
+            <MarketModalStack.Screen name='MarketStack' component={MarketStackNavigation} options={{ headerShown: false }} />
+            <MarketModalStack.Screen name='FilterModal' component={FilterModal} options={headerActions} />
+        </MarketModalStack.Navigator>
     )
 }

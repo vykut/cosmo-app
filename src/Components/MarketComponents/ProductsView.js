@@ -4,9 +4,9 @@ import { Text, Searchbar, useTheme, IconButton } from 'react-native-paper'
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { useMarketContext } from './MarketContext/MarketContext';
 import CategoriesList from './CategoriesList';
-import ProductsList from './ProductsList';
 import { colors } from '../../utils';
 import { Badge } from 'react-native-paper';
+import ProductsGrid from '../ProductComponents/ProductsGrid';
 
 export default function ProductsView() {
     const route = useRoute()
@@ -49,10 +49,8 @@ export default function ProductsView() {
     }
 
     if (products.length && route.params.searchQuery) {
-        products = products.filter((product) => product.data && product.data.name.normalize("NFD").replace(/[\u0300-\u036f]/g, "").includes(route.params.searchQuery))
+        products = products.filter((product) => product.data && product.data.name.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").includes(route.params.searchQuery))
     }
-
-    console.log(route.params.sort)
 
     if (route.params.sort) {
         switch (route.params.sort) {
@@ -93,7 +91,7 @@ export default function ProductsView() {
     }
 
     return (
-        <View>
+        <View style={{ flex: 1 }}>
             <Searchbar
                 placeholder="Caută un produs"
                 onChangeText={(searchQuery) => navigation.setParams({ ...route.params, searchQuery: searchQuery })}
@@ -106,7 +104,7 @@ export default function ProductsView() {
             />
             <ScrollView style={styles.scrollView}>
                 <CategoriesList />
-                <ProductsList products={products} />
+                <ProductsGrid products={products} />
             </ScrollView>
         </View>
     )

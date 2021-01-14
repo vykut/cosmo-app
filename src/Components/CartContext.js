@@ -11,9 +11,7 @@ export function useCartContext() {
 
 export function CartProvider({ children }) {
     const auth = useSelector(state => state.firebase.auth);
-    const firestore = useFirestore()
     const functions = firebaseFunctions
-
 
     const initialCart = useMemo(() => {
         return {
@@ -23,10 +21,7 @@ export function CartProvider({ children }) {
         }
     }, [])
 
-    const [cart, setCart] = useState(initialCart)
-    const [firebaseCart, setFirebaseCart] = useState(initialCart)
-    const [productsInFirebaseCart, setProductsInFirebaseCart] = useState([])
-    const [isFirestoreCart, setIsFirestoreCart] = useState(false)
+    const [offlineCart, setOfflineCart] = useState(initialCart)
 
     const cosmoMarketDoc = 'CosmoMarket'
     useFirestoreConnect([{
@@ -38,73 +33,88 @@ export function CartProvider({ children }) {
         ({ firestore }) => firestore.data.stores && firestore.data.stores[cosmoMarketDoc]
     )
 
-    const shouldUploadCartToFirestore = !isEmpty(auth) && cart.products && !isFirestoreCart && !isFirestoreCart
+    const shouldUploadCartToFirestore = !isEmpty(auth) && offlineCart.quantity
     useEffect(() => {
         if (shouldUploadCartToFirestore) {
-            setIsFirestoreCart(true)
             var promises = []
-            Object.keys(cart.products).forEach((product) => {
-                promises.push(functions.httpsCallable('addProductToCart')({ productID: product, quantity: cart.products[product].quantity }))
+            Object.keys(offlineCart.products).forEach((product) => {
+                promises.push(functions.httpsCallable('addProductToCart')({ productID: product, quantity: offlineCart.products[product].quantity }))
             })
             Promise.all(promises)
                 .then(() => {
-                    setCart(initialCart)
+                    setOfflineCart(initialCart)
                 })
                 .catch(err => {
                     console.log(err)
                 })
         }
-    }, [cart.products, functions, initialCart, shouldUploadCartToFirestore])
+    }, [offlineCart.products, functions, initialCart, shouldUploadCartToFirestore])
 
-    useEffect(() => {
-        var cartUnsubscribe
-        var productsUnsubscribe
-        if (!isEmpty(auth)) {
-            cartUnsubscribe = firestore.collection('carts').doc(auth.uid).onSnapshot(function (doc) {
-                setFirebaseCart(doc.data())
-            })
-            productsUnsubscribe = firestore.collection('carts').doc(auth.uid).collection('products').onSnapshot(function (querySnapshot) {
-                var docs = []
-                querySnapshot.forEach(doc => {
-                    docs.push({ id: doc.id, data: doc.data() })
-                })
-                setProductsInFirebaseCart(docs)
-            })
-            return () => { cartUnsubscribe(); productsUnsubscribe(); }
-        }
-    }, [auth, firestore,])
+    useFirestoreConnect([{
+        collection: 'carts',
+        doc: auth?.uid,
+    }])
+
+    const firebaseCart = useSelector(
+        ({ firestore }) => firestore.data.carts?.[auth?.uid]
+    )
+
+    const productsInFirebaseCartStoreAs = 'productsInFirebaseCart'
+    useFirestoreConnect(() => {
+        if (isEmpty(auth))
+            return []
+
+        return [{
+            collection: 'carts',
+            doc: auth.uid,
+            subcollections: [{
+                collection: 'products'
+            }],
+            storeAs: productsInFirebaseCartStoreAs
+        }]
+    })
+
+    const productsInFirebaseCart = useSelector(
+        ({ firestore }) => firestore.data[productsInFirebaseCartStoreAs] &&
+            Object.entries(firestore.data[productsInFirebaseCartStoreAs]).filter(x => x[1])
+                .map(x => { return { id: x[0], data: { ...x[1], totalPrice: x[1].price } } })
+    )
+
 
     const addProductToCart = async (productID, price, quantity = 1) => {
-        let productTotalPrice = price * quantity
-
-        if (isEmpty(auth)) {
-            setCart({
-                ...cart,
-                products: {
-                    ...cart.products,
-                    [productID]: {
-                        price: cart.products && cart.products[productID] ? productTotalPrice + cart.products[productID].price : productTotalPrice,
-                        quantity: cart.products && cart.products[productID] ? quantity + cart.products[productID].quantity : quantity
+        if (quantity > 0) {
+            let productTotalPrice = price * quantity
+            if (isEmpty(auth)) {
+                setOfflineCart(c => {
+                    return {
+                        ...c,
+                        products: {
+                            ...c.products,
+                            [productID]: {
+                                totalPrice: c.products?.[productID] ? productTotalPrice + c.products[productID].totalPrice : productTotalPrice,
+                                quantity: c.products?.[productID] ? quantity + c.products[productID].quantity : quantity
+                            }
+                        },
+                        quantity: c.quantity + quantity,
+                        totalPrice: c.totalPrice + productTotalPrice
                     }
-                },
-                quantity: cart.quantity + quantity,
-                totalPrice: cart.totalPrice + productTotalPrice
-            })
-        } else {
-            try {
-                await functions.httpsCallable('addProductToCart')({ productID: productID, quantity: quantity })
-            } catch (err) {
-                console.log(err)
+                })
+            } else {
+                try {
+                    await functions.httpsCallable('addProductToCart')({ productID: productID, quantity: quantity })
+                } catch (err) {
+                    console.log(err)
+                }
             }
         }
     }
 
     const deleteProductFromCart = async (productID) => {
         if (isEmpty(auth)) {
-            setCart((prevCart) => {
+            setOfflineCart((prevCart) => {
                 const newCart = { ...prevCart }
                 newCart.quantity = prevCart.quantity - prevCart.products[productID].quantity
-                newCart.totalPrice = prevCart.totalPrice - prevCart.products[productID].price
+                newCart.totalPrice = prevCart.totalPrice - prevCart.products[productID].totalPrice
                 delete newCart.products[productID]
                 return newCart
             })
@@ -119,7 +129,7 @@ export function CartProvider({ children }) {
 
     const getCart = () => {
         if (isEmpty(auth)) {
-            return cart
+            return offlineCart
         } else {
             return firebaseCart
         }
@@ -127,7 +137,7 @@ export function CartProvider({ children }) {
 
     const getProductsInCart = () => {
         if (isEmpty(auth)) {
-            return Object.keys(cart.products).map((key) => { return { id: key, data: cart.products[key] } })
+            return Object.keys(offlineCart.products).map((key) => { return { id: key, data: offlineCart.products[key] } })
         } else {
             return productsInFirebaseCart
         }
@@ -135,15 +145,15 @@ export function CartProvider({ children }) {
 
     const incrementQuantity = async (productID) => {
         if (isEmpty(auth)) {
-            setCart({
-                ...cart,
-                quantity: cart.quantity + 1,
-                totalPrice: cart.totalPrice + cart.products[productID].price / cart.products[productID].quantity,
+            setOfflineCart({
+                ...offlineCart,
+                quantity: offlineCart.quantity + 1,
+                totalPrice: offlineCart.totalPrice + offlineCart.products[productID].totalPrice / offlineCart.products[productID].quantity,
                 products: {
-                    ...cart.products,
+                    ...offlineCart.products,
                     [productID]: {
-                        price: cart.products[productID].price + cart.products[productID].price / cart.products[productID].quantity,
-                        quantity: cart.products[productID].quantity + 1
+                        totalPrice: offlineCart.products[productID].totalPrice + offlineCart.products[productID].totalPrice / offlineCart.products[productID].quantity,
+                        quantity: offlineCart.products[productID].quantity + 1
                     }
                 }
             })
@@ -158,16 +168,16 @@ export function CartProvider({ children }) {
 
     const decrementQuantity = async (productID) => {
         if (isEmpty(auth)) {
-            setCart({
-                ...cart,
-                quantity: cart.quantity - 1,
-                totalPrice: cart.totalPrice - cart.products[productID].price / cart.products[productID].quantity,
+            setOfflineCart({
+                ...offlineCart,
+                quantity: offlineCart.quantity - 1,
+                totalPrice: offlineCart.totalPrice - offlineCart.products[productID].totalPrice / offlineCart.products[productID].quantity,
                 products: {
-                    ...cart.products,
+                    ...offlineCart.products,
                     [productID]: {
-                        ...cart.products[productID],
-                        price: cart.products[productID].price - cart.products[productID].price / cart.products[productID].quantity,
-                        quantity: cart.products[productID].quantity - 1
+                        ...offlineCart.products[productID],
+                        totalPrice: offlineCart.products[productID].totalPrice - offlineCart.products[productID].totalPrice / offlineCart.products[productID].quantity,
+                        quantity: offlineCart.products[productID].quantity - 1
                     }
                 }
             })

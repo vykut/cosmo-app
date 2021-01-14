@@ -10,7 +10,6 @@ export function useMarketContext() {
 }
 
 export default function MarketProvider({ children }) {
-
     useFirestoreConnect({
         collection: 'categories',
         where: [['enabled', '==', true]]

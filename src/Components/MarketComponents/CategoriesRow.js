@@ -19,7 +19,6 @@ export default function CategoriesRow({ categories, products, sort }) {
         <RowContainer title='Categorii' products={products} navigation={navigation} sort={sort}>
             {categories.map((category) => <CategoryChip
                 key={category.id}
-                products={products.filter((product) => product.data.categories.includes(category.id))}
                 category={category}
             />)}
         </RowContainer>

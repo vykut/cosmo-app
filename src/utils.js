@@ -43,5 +43,10 @@ export const stackHeaderStyle = {
 }
 
 export const bottomTabStyle = {
-    activeTintColor: colors.primary
+    activeTintColor: colors.primary,
+    labelPosition: 'below-icon',
 }
+
+export const imageWidth = 100
+export const aspectRatio = 1.19
+export const imageHeight = imageWidth * aspectRatio

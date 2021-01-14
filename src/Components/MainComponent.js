@@ -9,6 +9,7 @@ import { useCartContext } from './CartContext';
 import { useSelector } from 'react-redux'
 import { isLoaded } from 'react-redux-firebase'
 import MarketModalNavigation from './MarketComponents/MarketModalNavigation';
+import SplashScreen from './AuxiliaryComponents/SplashScreen';
 
 
 
@@ -18,8 +19,9 @@ export default function MainComponent() {
     const cartContext = useCartContext()
     const auth = useSelector(state => state.firebase.auth)
 
+
     if (!isLoaded(auth))
-        return null
+        return <SplashScreen />
 
     return (
         <NavigationContainer theme={cosmoTheme} >
@@ -29,14 +31,14 @@ export default function MainComponent() {
                         return <MaterialCommunityIcons name='storefront-outline' size={size} color={color} />
                     }
                 }} />
-                <Tab.Screen name="Coșul meu" component={CartStackNavigation} options={{
+                <Tab.Screen name="Cart" component={CartStackNavigation} options={{
                     tabBarIcon: ({ color, size, ...props }) => {
                         return <MaterialCommunityIcons name='cart-outline' size={size} color={color} />
                     },
-                    tabBarBadge: cartContext.getCart().quantity,
+                    tabBarBadge: cartContext.getCart()?.quantity,
                     tabBarBadgeStyle: { backgroundColor: colors.accent, color: colors.darkText }
                 }} />
-                <Tab.Screen name="Profil" component={ProfileStackNavigation} options={{
+                <Tab.Screen name="Profile" component={ProfileStackNavigation} options={{
                     tabBarIcon: ({ color, size, ...props }) => {
                         return <MaterialCommunityIcons name='account-circle-outline' size={size} color={color} />
                     }
