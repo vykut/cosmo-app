@@ -34,7 +34,9 @@ const rootReducer = combineReducers({
 })
 
 // Create store with reducers and initial state
-const initialState = {}
+const initialState = {
+
+}
 const store = createStore(rootReducer, initialState)
 
 const rrfProps = {

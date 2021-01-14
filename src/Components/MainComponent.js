@@ -36,12 +36,15 @@ export default function MainComponent() {
                         return <MaterialCommunityIcons name='cart-outline' size={size} color={color} />
                     },
                     tabBarBadge: cartContext.getCart()?.quantity,
-                    tabBarBadgeStyle: { backgroundColor: colors.accent, color: colors.darkText }
+                    tabBarBadgeStyle: { backgroundColor: colors.accent, color: colors.darkText },
+                    title: 'Coșul meu'
+
                 }} />
                 <Tab.Screen name="Profile" component={ProfileStackNavigation} options={{
                     tabBarIcon: ({ color, size, ...props }) => {
                         return <MaterialCommunityIcons name='account-circle-outline' size={size} color={color} />
-                    }
+                    },
+                    title: 'Profil'
                 }} />
             </Tab.Navigator>
         </NavigationContainer>
