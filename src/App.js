@@ -1,6 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
-import { Button, SafeAreaView, StyleSheet, Text, View } from 'react-native';
 import { createStore, combineReducers, compose } from 'redux'
 import { Provider } from 'react-redux'
 import { ReactReduxFirebaseProvider, firebaseReducer } from 'react-redux-firebase'
@@ -14,13 +13,16 @@ import { firebaseConfig } from './FirebaseConfig';
 import { DefaultTheme, Provider as PaperProvider } from 'react-native-paper';
 import MainComponent from './Components/MainComponent';
 import { app } from './utils';
-import { CartProvider } from './Components/CartContext';
-import MarketProvider from './Components/MarketComponents/MarketContext/MarketContext';
+import { CartProvider } from './Components/contexts/CartContext';
+import MarketProvider from './Components/contexts/MarketContext';
+import ProfileProvider from './Components/contexts/ProfileContext';
+import OrderProvider from './Components/contexts/OrderContext';
 
 const rrfConfig = {
   userProfile: 'users',
   useFirestoreForProfile: true,
   enableClaims: true,
+  enableRedirectHandling: false,
 }
 
 const firebaseApp = app
@@ -65,11 +67,15 @@ export default function App() {
     <Provider store={store}>
       <ReactReduxFirebaseProvider {...rrfProps}>
         <PaperProvider theme={theme}>
-          <MarketProvider>
-            <CartProvider>
-              <MainComponent />
-            </CartProvider>
-          </MarketProvider>
+          <ProfileProvider>
+            <MarketProvider>
+              <CartProvider>
+                <OrderProvider>
+                  <MainComponent />
+                </OrderProvider>
+              </CartProvider>
+            </MarketProvider>
+          </ProfileProvider>
         </PaperProvider>
       </ReactReduxFirebaseProvider>
     </Provider>

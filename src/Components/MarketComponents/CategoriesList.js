@@ -2,7 +2,7 @@ import React from 'react'
 import { View, Text, StyleSheet } from 'react-native'
 import { useRoute } from '@react-navigation/native'
 import CategoryChip from './CategoryChip'
-import { useMarketContext } from './MarketContext/MarketContext'
+import { useMarketContext } from '../contexts/MarketContext'
 
 export default function CategoriesList() {
     const route = useRoute()

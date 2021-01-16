@@ -2,8 +2,8 @@ import React, { useEffect, useMemo, useState } from 'react'
 import { Image, View, StyleSheet } from 'react-native'
 import { Surface, Text, Subheading, Title, ProgressBar, useTheme } from 'react-native-paper'
 import QuantitySelector from '../AuxiliaryComponents/QuantitySelector'
-import { useCartContext } from '../CartContext'
-import { useMarketContext } from '../MarketComponents/MarketContext/MarketContext'
+import { useCartContext } from '../contexts/CartContext'
+import { useMarketContext } from '../contexts/MarketContext'
 
 export default function ProductRow({ product }) {
     const cartContext = useCartContext()
@@ -34,7 +34,7 @@ export default function ProductRow({ product }) {
 
     const mergedProduct = useMemo(() => {
         const products = marketContext.products
-        const p = products?.find(p => p.id === product?.id)
+        const p = products?.find(p => p.id === product?.id && p.data)
         if (p) {
             return { ...product, data: { ...product.data, ...p.data } }
         }

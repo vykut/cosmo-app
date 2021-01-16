@@ -3,7 +3,7 @@ import { View, StyleSheet } from 'react-native'
 import { Text, Subheading, useTheme } from 'react-native-paper'
 import MultiSlider from '@ptomasroos/react-native-multi-slider'
 import { useRoute, useNavigation } from '@react-navigation/native'
-import { useMarketContext } from './MarketContext/MarketContext'
+import { useMarketContext } from '../contexts/MarketContext'
 import { useWindowDimensions } from 'react-native';
 
 export default function PriceFilter() {

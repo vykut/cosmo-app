@@ -1,15 +1,17 @@
 import React from 'react'
 import { View, Text, StyleSheet, ScrollView } from 'react-native'
-import { useCartContext } from '../CartContext'
+import { useCartContext } from '../contexts/CartContext'
 import ProductRow from './ProductRow'
+import { Title } from 'react-native-paper'
 
 
 export default function ProductsList() {
     const cartContext = useCartContext()
 
-    const cart = cartContext.getCart()
     const productsInCart = cartContext.getProductsInCart()
 
+    if (!productsInCart?.length)
+        return <Title style={{ textAlign: 'center' }}>Nu există produse în coș</Title>
 
     return (
         <View style={styles.mainContainer}>

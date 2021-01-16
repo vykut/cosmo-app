@@ -2,7 +2,7 @@ import React, { useEffect, useLayoutEffect, useState } from 'react'
 import { View, ScrollView, StyleSheet, Image, useWindowDimensions } from 'react-native'
 import { Button, Surface, useTheme, IconButton, Paragraph, Title, Headline, Text, } from 'react-native-paper'
 import { aspectRatio, colors, firebaseFunctions } from '../../utils'
-import { useCartContext } from '../CartContext'
+import { useCartContext } from '../contexts/CartContext'
 import { useSelector } from 'react-redux'
 import { AntDesign } from '@expo/vector-icons';
 import { useNavigation, useRoute } from '@react-navigation/native';

@@ -1,7 +1,7 @@
 import React, { createContext, useContext, useEffect, useMemo, useState } from "react"
 import { useSelector } from "react-redux";
 import { isEmpty, useFirestoreConnect, useFirestore, useFirebase } from "react-redux-firebase";
-import { firebaseFunctions } from "../utils";
+import { firebaseFunctions } from "../../utils";
 
 const CartContext = createContext()
 
@@ -12,6 +12,7 @@ export function useCartContext() {
 export function CartProvider({ children }) {
     const auth = useSelector(state => state.firebase.auth);
     const functions = firebaseFunctions
+    const firestore = useFirestore()
 
     const initialCart = useMemo(() => {
         return {
@@ -30,7 +31,13 @@ export function CartProvider({ children }) {
     }])
 
     const cosmoMarketStore = useSelector(
-        ({ firestore }) => firestore.data.stores && firestore.data.stores[cosmoMarketDoc]
+        ({ firestore }) => {
+            let store = firestore.data?.stores?.[cosmoMarketDoc]
+            if (!isEmpty(store)) {
+                return store
+            }
+            return null
+        }
     )
 
     const shouldUploadCartToFirestore = !isEmpty(auth) && offlineCart.quantity
@@ -190,6 +197,23 @@ export function CartProvider({ children }) {
         }
     }
 
+    const placeOrder = async ({ addressID, address, coords, payment, notes, profile }) => {
+        var docRef = firestore.collection('addresses')
+        let batch = firestore.batch()
+        let userRef = firestore.collection('users').doc(auth.uid)
+
+        if (!addressID || addressID === 'new') {
+            docRef = docRef.doc()
+            batch.set(docRef, { ...address, userID: auth.uid, latitude: coords.latitude, longitude: coords.longitude })
+        } else {
+            docRef = docRef.doc(addressID)
+            batch.set(docRef, { ...address, userID: auth.uid, latitude: coords.latitude, longitude: coords.longitude }, { merge: true })
+        }
+        batch.update(userRef, profile)
+        await batch.commit()
+        await functions.httpsCallable('placeOrder')({ addressID: docRef.id, payment, notes })
+    }
+
     const value = {
         // vars
         cosmoMarketStore,
@@ -201,6 +225,7 @@ export function CartProvider({ children }) {
         getProductsInCart,
         incrementQuantity,
         decrementQuantity,
+        placeOrder,
     }
 
     return (

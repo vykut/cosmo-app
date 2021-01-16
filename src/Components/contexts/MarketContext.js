@@ -85,7 +85,9 @@ export default function MarketProvider({ children }) {
         },
     ]
 
-
+    const getProductByID = (productID) => {
+        return products?.find((product) => product?.id === productID)
+    }
 
     const value = {
         //vars
@@ -100,6 +102,7 @@ export default function MarketProvider({ children }) {
         //functions
         getChildrenCategories,
         getParentCategories,
+        getProductByID,
     }
 
     return (

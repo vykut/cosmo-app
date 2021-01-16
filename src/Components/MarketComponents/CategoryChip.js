@@ -2,7 +2,7 @@ import React from 'react'
 import { StyleSheet, View } from 'react-native'
 import { Text, Chip, useTheme } from 'react-native-paper'
 import { useNavigation, useRoute } from '@react-navigation/native';
-import { useMarketContext } from './MarketContext/MarketContext';
+import { useMarketContext } from '../contexts/MarketContext';
 
 export default function CategoryChip({ category, selected }) {
     const navigation = useNavigation()

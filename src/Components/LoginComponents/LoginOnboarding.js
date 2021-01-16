@@ -1,7 +1,7 @@
 import React from 'react'
 import { View, Text, Image, StyleSheet, ScrollView } from 'react-native'
 import { useWindowDimensions } from 'react-native'
-import { CreateAccountButton, GoogleLoginButton, EmailLoginButton } from '../AuxiliaryComponents/Buttons'
+import { CreateAccountButton, GoogleLoginButton, EmailLoginButton, ResetPasswordButton } from '../AuxiliaryComponents/Buttons'
 
 export default function LoginOnboarding() {
     const windowDimensions = useWindowDimensions()
@@ -14,6 +14,7 @@ export default function LoginOnboarding() {
                 <GoogleLoginButton />
                 <EmailLoginButton />
                 <CreateAccountButton />
+                <ResetPasswordButton />
             </ScrollView>
         </View>
     )

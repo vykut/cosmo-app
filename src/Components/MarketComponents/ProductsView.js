@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useLayoutEffect } from 'react'
 import { ScrollView, View, StyleSheet } from 'react-native'
 import { Text, Searchbar, useTheme, IconButton } from 'react-native-paper'
 import { useNavigation, useRoute } from '@react-navigation/native';
-import { useMarketContext } from './MarketContext/MarketContext';
+import { useMarketContext } from '../contexts/MarketContext';
 import CategoriesList from './CategoriesList';
 import { colors } from '../../utils';
 import { Badge } from 'react-native-paper';

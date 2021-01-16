@@ -1,14 +1,14 @@
 {
   "expo": {
-    "name": "cosmo-market-app",
-    "slug": "cosmo-market-app",
+    "name": "Cosmo Market",
+    "slug": "cosmo-market",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#f7ffff"
     },
     "updates": {
       "fallbackToCacheTimeout": 0
@@ -17,12 +17,33 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": false
+      "supportsTablet": false,
+      "bundleIdentifier": "com.victor-socaciu.cosmo-market",
+      "buildNumber": "1.0.0",
+      "config": {
+        "googleSignIn": {
+          "reservedClientId": "com.googleusercontent.apps.567087731440-n8g6d61glm0cb8lipoavffegcig89mkg",
+          "apiKey":"AIzaSyBau6f8XcSe7zw99emF3ZLraOULqVDJ7I0"
+        },
+        "googleSignInApiKey": "AIzaSyBau6f8XcSe7zw99emF3ZLraOULqVDJ7I0",
+        "googleMapsApiKey": "AIzaSyBau6f8XcSe7zw99emF3ZLraOULqVDJ7I0"
+      }
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
+      },
+      "package":"com.victor_socaciu.cosmo_market",
+      "versionCode": 1,
+      "config": {
+        "googleSignIn": {
+          "certificateHash":"7F0EBAF3EBE362277165950509E00CB84E280C0F",
+          "apiKey":"AIzaSyBzSgCQdAkCBGuRWY_0C87A06fsVXhPldU"
+        },
+        "googleMaps": {
+          "apiKey": "AIzaSyBzSgCQdAkCBGuRWY_0C87A06fsVXhPldU"
+        }
       }
     },
     "web": {

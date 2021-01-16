@@ -2,7 +2,7 @@ import React from 'react'
 import { ScrollView, StyleSheet, View } from 'react-native'
 import { ProgressBar, Text, Headline, Subheading, Button, useTheme } from 'react-native-paper'
 import { colors } from '../../utils'
-import { useMarketContext } from '../MarketComponents/MarketContext/MarketContext'
+import { useMarketContext } from '../contexts/MarketContext'
 
 export default function RowContainer({ children, navigation, category, title, sort }) {
     const theme = useTheme()

@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { Image, Pressable, StyleSheet, View } from 'react-native'
 import { Text, Paragraph, Subheading, Surface, Caption, IconButton, useTheme } from 'react-native-paper'
 import { imageHeight, imageWidth } from '../../utils'
-import { useCartContext } from '../CartContext'
+import { useCartContext } from '../contexts/CartContext'
 import { useNavigation, useRoute } from '@react-navigation/native';
 
 
