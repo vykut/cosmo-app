@@ -45,6 +45,12 @@ export default function AddressMapPicker({ control, setValue }) {
                             showsIndoors={false}
                             rotateEnabled={false}
                             pitchEnabled={false}
+                            initialRegion={{
+                                latitude: 44.535417803832146,
+                                longitude: 26.17188568471457,
+                                latitudeDelta: 0.009,
+                                longitudeDelta: 0.009,
+                            }}
                             showsIndoorLevelPicker={false}
                             style={{ width: 'auto', height: 300, borderRadius: 8 }}
                             onRegionChangeComplete={(coords) => {
