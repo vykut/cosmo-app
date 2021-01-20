@@ -1,10 +1,11 @@
-import React from 'react'
-import { View, Text, Image } from 'react-native'
-import { Button, useTheme } from 'react-native-paper'
+import React, { useState } from 'react'
+import { View, Image } from 'react-native'
+import { Button, useTheme, Text, Subheading } from 'react-native-paper'
 import { useFirebase } from 'react-redux-firebase'
 import * as Google from 'expo-google-app-auth';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { MaterialCommunityIcons } from '@expo/vector-icons'
+import * as Facebook from 'expo-facebook'
 
 export function GoogleLoginButton() {
     const theme = useTheme()
@@ -87,6 +88,68 @@ export function EmailLoginButton() {
                 Conectare cu email
 
             </Button>
+        </View>
+    )
+}
+
+export function FacebookLoginButton() {
+    const theme = useTheme()
+    const firebase = useFirebase()
+    const [isDisabled, setIsDisabled] = useState(false)
+
+    const login = async () => {
+        try {
+            const loginData = await Facebook.logInWithReadPermissionsAsync({
+                permissions: ['public_profile', 'email'],
+
+            });
+
+            if (loginData.declinedPermissions.includes('email'))
+                return Facebook.logOutAsync()
+
+            // console.log(loginData)
+
+            if (loginData.type === 'success') {
+                await firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL);
+                const credential = firebase.auth.FacebookAuthProvider.credential(loginData.token);
+
+                const facebookProfileData = await firebase.auth().signInWithCredential(credential);
+
+                // console.log(facebookProfileData)
+
+                if (facebookProfileData.additionalUserInfo.isNewUser) {
+                    firebase.updateProfile({
+                        email: facebookProfileData?.additionalUserInfo?.profile?.email || facebookProfileData?.user?.email || '',
+                        phone: facebookProfileData?.user?.phoneNumber || '',
+                        firstName: facebookProfileData?.additionalUserInfo?.profile?.first_name || facebookProfileData?.user?.displayName || '',
+                        lastName: facebookProfileData?.additionalUserInfo?.profile?.last_name || facebookProfileData?.user?.displayName || '',
+                        favoriteProducts: [],
+                        numberOfOrdersCompleted: 0,
+                    })
+                }
+            }
+        } catch ({ message }) {
+            console.log(message)
+            setIsDisabled(true)
+        }
+    }
+
+    return (
+        <View>
+            <Button
+                contentStyle={{ height: 48, flex: 1, alignItems: 'center', flexDirection: 'row' }}
+                labelStyle={{ textTransform: 'none', color: theme.colors.lightText }}
+                mode='contained'
+                color={'#4267B2'}
+                style={{ borderRadius: 24, width: 280 }}
+                onPress={login}
+                disabled={isDisabled}
+            >
+                <MaterialCommunityIcons name='facebook' size={16} />
+                <View style={{ width: 16, height: 1 }} />
+                Conectare cu Facebook
+            </Button>
+            {isDisabled && <Text style={{ color: theme.colors.error, textAlign: 'center' }}>Conectează-te cu Google / email</Text>}
         </View>
     )
 }

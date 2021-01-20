@@ -16,6 +16,10 @@
     "assetBundlePatterns": [
       "**/*"
     ],
+    "facebookScheme": "fb872754790179974",
+    "facebookAppId": "872754790179974",
+    "facebookDisplayName":"CosmoMarket",
+    "facebookAutoInitEnabled": true,
     "ios": {
       "supportsTablet": false,
       "bundleIdentifier": "com.victor-socaciu.cosmo-market",

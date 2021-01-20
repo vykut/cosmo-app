@@ -1,6 +1,5 @@
-import React, { useMemo } from 'react'
-import { View, Image } from 'react-native'
-import { Surface, Button, Subheading, Title, Text, useTheme, DataTable } from 'react-native-paper'
+import React from 'react'
+import { Text, useTheme, DataTable } from 'react-native-paper'
 import { useMarketContext } from '../contexts/MarketContext'
 import { useNavigation, useRoute } from '@react-navigation/native';
 
@@ -22,7 +21,7 @@ export default function ProductInOrderRow({ productInOrder }) {
                 {productInOrder?.data?.quantity}
             </DataTable.Cell>
             <DataTable.Cell numeric>
-                {productInOrder?.data?.price} RON
+                {productInOrder?.data?.price?.toFixed(2)} RON
             </DataTable.Cell>
         </DataTable.Row>
     )

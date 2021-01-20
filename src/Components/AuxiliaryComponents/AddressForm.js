@@ -159,7 +159,7 @@ export default function AddressForm({ control, errors }) {
                                 theme={theme}
                                 dense
                                 selectionColor={theme.colors.primary}
-                                label='Etichetă *'
+                                label='Salvează ca *'
                                 mode='outlined'
                                 onBlur={onBlur}
                                 onChangeText={value => onChange(value)}

@@ -21,7 +21,7 @@ export default function OrderTotal() {
             </View>
             <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-between' }}>
                 <Headline>Total comandă</Headline>
-                <Headline>{(totalPrice + deliveryPrice)?.toFixed(2)} RON</Headline>
+                <Headline>{(totalPrice + deliveryPrice || 0)?.toFixed(2)} RON</Headline>
             </View>
         </View>
     )

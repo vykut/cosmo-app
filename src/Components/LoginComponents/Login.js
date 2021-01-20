@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { View, StyleSheet, ScrollView, Image, KeyboardAvoidingView, Platform } from 'react-native'
-import { CreateAccountButton, GoogleLoginButton, ResetPasswordButton } from '../AuxiliaryComponents/Buttons'
+import { CreateAccountButton, FacebookLoginButton, GoogleLoginButton, ResetPasswordButton } from '../AuxiliaryComponents/Buttons'
 import { Button, TextInput, useTheme, Banner, Subheading, Text } from 'react-native-paper'
 import { useForm, Controller } from "react-hook-form";
 import { useFirebase } from "react-redux-firebase";
@@ -121,6 +121,9 @@ export default function Login() {
 
                 <View style={{ marginVertical: 12, flex: 1, alignItems: 'center', }}>
                     <GoogleLoginButton />
+                </View>
+                <View style={{ marginVertical: 12, flex: 1, alignItems: 'center', }}>
+                    <FacebookLoginButton />
                 </View>
                 <View style={{ marginVertical: 12, flex: 1, alignItems: 'center', }}>
                     <CreateAccountButton />

@@ -17,6 +17,7 @@ import { CartProvider } from './Components/contexts/CartContext';
 import MarketProvider from './Components/contexts/MarketContext';
 import ProfileProvider from './Components/contexts/ProfileContext';
 import OrderProvider from './Components/contexts/OrderContext';
+import * as Facebook from 'expo-facebook'
 
 const rrfConfig = {
   userProfile: 'users',
@@ -61,6 +62,8 @@ const theme = {
     lightText: '#FFFFFF',
   }
 };
+
+Facebook.initializeAsync({ appId: '872754790179974', appName: 'CosmoMarket' })
 
 export default function App() {
   return (
