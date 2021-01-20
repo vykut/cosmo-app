@@ -12,7 +12,7 @@ export default function ProductsRow({ products, category, title, sort }) {
     const navigation = useNavigation()
     const theme = useTheme()
 
-    if (!products.length)
+    if (!products?.length)
         return <ProgressBar indeterminate color={theme.colors.primary} />
 
     return (

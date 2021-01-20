@@ -20,7 +20,7 @@ export default function MarketProvider({ children }) {
             .map((category) => { return { id: category[0], data: category[1] } })
     )
 
-    const mainCategories = isEmpty(categories) ? [] : categories.filter((category) => category.data.mainCategory)
+    const mainCategories = isEmpty(categories) ? [] : categories.filter(x => x.data).filter((category) => category.data.mainCategory)
 
     const getChildrenCategories = (category) => {
         if (category.data.childrenCategories) {

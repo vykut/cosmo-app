@@ -19,7 +19,7 @@ export default function RowContainer({ children, navigation, category, title, so
         <View style={styles.mainContainer}>
             <View style={styles.rowTitle}>
                 <Subheading>
-                    {category ? category.data.name : title}
+                    {category?.data ? category.data.name : title}
                 </Subheading>
                 <Button mode='text' icon='chevron-right' contentStyle={{ flexDirection: 'row-reverse' }} labelStyle={{ textTransform: 'none' }} onPress={seeAll}>
                     Vezi toate
