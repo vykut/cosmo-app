@@ -1,6 +1,6 @@
 import React, { useMemo, useState } from 'react'
-import { View, Text, Image, TouchableWithoutFeedback, Pressable } from 'react-native'
-import MapView, { PROVIDER_GOOGLE, Marker } from 'react-native-maps'
+import { View, Image } from 'react-native'
+import MapView, { PROVIDER_GOOGLE } from 'react-native-maps'
 import Geocode from "react-geocode";
 import { Controller } from "react-hook-form";
 import { ActivityIndicator, useTheme } from 'react-native-paper';
@@ -13,6 +13,7 @@ Geocode.setRegion("ro");
 
 export default function AddressMapPicker({ control, setValue }) {
     const [isShowing, setIsShowing] = useState(false)
+    const [defaultChange, setDefaultChange] = useState(true)
 
     const theme = useTheme()
 
@@ -45,17 +46,15 @@ export default function AddressMapPicker({ control, setValue }) {
                             showsIndoors={false}
                             rotateEnabled={false}
                             pitchEnabled={false}
-                            initialRegion={{
-                                latitude: 44.535417803832146,
-                                longitude: 26.17188568471457,
-                                latitudeDelta: 0.009,
-                                longitudeDelta: 0.009,
-                            }}
                             showsIndoorLevelPicker={false}
                             style={{ width: 'auto', height: 300, borderRadius: 8 }}
-                            onRegionChangeComplete={(coords) => {
-                                onChange(coords)
-                                setAddress(coords)
+                            onRegionChangeComplete={async (coords) => {
+                                if (defaultChange)
+                                    setDefaultChange(false)
+                                else {
+                                    onChange(coords)
+                                    await setAddress(coords)
+                                }
                             }}
                             region={value}
                         />
@@ -72,6 +71,12 @@ export default function AddressMapPicker({ control, setValue }) {
                     </View>
                 }
                 name='coords'
+                defaultValue={{
+                    latitude: 44.535417803832146,
+                    longitude: 26.17188568471457,
+                    latitudeDelta: 0.009,
+                    longitudeDelta: 0.009,
+                }}
             />
         </View>
     )

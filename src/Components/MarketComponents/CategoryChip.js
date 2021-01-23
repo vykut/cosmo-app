@@ -40,7 +40,7 @@ export default function CategoryChip({ category, selected }) {
                 onClose={selected && removeCategory}
                 onPress={!selected && seeProducts}
             >
-                {category.data.name}
+                {category?.data?.name}
             </Chip>
         </View>
     )

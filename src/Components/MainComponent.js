@@ -46,21 +46,23 @@ export default function MainComponent() {
         return <SplashScreen />
 
     return (
-        <NavigationContainer theme={cosmoTheme} >
-            <Tab.Navigator tabBarOptions={bottomTabStyle}>
-                <Tab.Screen name="Market" component={MarketModalNavigation} options={{
-                    tabBarIcon: ({ color, size, ...props }) => {
-                        return <MaterialCommunityIcons name='storefront-outline' size={size} color={color} />
-                    }
-                }} />
-                <Tab.Screen name="Cart" component={CartStackNavigation} options={cartOptions} />
-                <Tab.Screen name="Profile" component={ProfileStackNavigation} options={{
-                    tabBarIcon: ({ color, size, ...props }) => {
-                        return <MaterialCommunityIcons name='account-circle-outline' size={size} color={color} />
-                    },
-                    title: 'Profil'
-                }} />
-            </Tab.Navigator>
-        </NavigationContainer>
+        <>
+            <NavigationContainer theme={cosmoTheme} >
+                <Tab.Navigator tabBarOptions={bottomTabStyle}>
+                    <Tab.Screen name="Market" component={MarketModalNavigation} options={{
+                        tabBarIcon: ({ color, size, ...props }) => {
+                            return <MaterialCommunityIcons name='storefront-outline' size={size} color={color} />
+                        }
+                    }} />
+                    <Tab.Screen name="Cart" component={CartStackNavigation} options={cartOptions} />
+                    <Tab.Screen name="Profile" component={ProfileStackNavigation} options={{
+                        tabBarIcon: ({ color, size, ...props }) => {
+                            return <MaterialCommunityIcons name='account-circle-outline' size={size} color={color} />
+                        },
+                        title: 'Profil'
+                    }} />
+                </Tab.Navigator>
+            </NavigationContainer>
+        </>
     )
 }

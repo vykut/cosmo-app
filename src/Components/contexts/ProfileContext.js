@@ -48,6 +48,11 @@ export default function ProfileProvider({ children }) {
         return docRef.set({ ...address, userID: auth.uid, latitude: coords.latitude, longitude: coords.longitude }, { merge: true })
     }
 
+    const deleteAddress = (addressID) => {
+        var docRef = firestore.collection('addresses').doc(addressID)
+        return docRef.delete()
+    }
+
 
     const value = {
         //vars
@@ -57,6 +62,7 @@ export default function ProfileProvider({ children }) {
         getAddressByID,
         updatePersonalData,
         updateAddress,
+        deleteAddress,
     }
 
     return (

@@ -7,6 +7,7 @@ import CategoriesList from './CategoriesList';
 import { colors } from '../../utils';
 import { Badge } from 'react-native-paper';
 import ProductsGrid from '../ProductComponents/ProductsGrid';
+import ClosedStoreBanner from '../AuxiliaryComponents/ClosedStoreBanner';
 
 export default function ProductsView() {
     const route = useRoute()
@@ -102,6 +103,7 @@ export default function ProductsView() {
 
                 placeholderTextColor={theme.colors.lightText}
             />
+            <ClosedStoreBanner />
             <ScrollView style={styles.scrollView}>
                 <CategoriesList />
                 <ProductsGrid products={products} />

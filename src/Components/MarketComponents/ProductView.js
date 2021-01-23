@@ -7,6 +7,7 @@ import { useSelector } from 'react-redux'
 import { AntDesign } from '@expo/vector-icons';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import QuantitySelector from '../AuxiliaryComponents/QuantitySelector'
+import ClosedStoreBanner from '../AuxiliaryComponents/ClosedStoreBanner'
 
 
 export default function ProductView() {
@@ -61,6 +62,7 @@ export default function ProductView() {
 
     return (
         <View style={styles.mainContainer}>
+            <ClosedStoreBanner />
             <ScrollView style={styles.scroll}>
                 <Surface style={styles.surface}>
                     <Image source={{ uri: product.data.image }} style={{ ...styles.image, width: windowDimensions.width - 64, height: windowDimensions.width - 64 }} />

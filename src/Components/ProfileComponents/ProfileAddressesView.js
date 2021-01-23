@@ -47,6 +47,37 @@ export default function ProfileAddressesView() {
         }
     }
 
+    const deleteAddress = async () => {
+        try {
+            const addressID = form.getValues('addressID')
+            setIsLoading(true)
+            await profileContext.deleteAddress(addressID)
+        } catch (err) {
+            console.log(err)
+        } finally {
+            setIsLoading(false)
+        }
+
+    }
+
+    function DeleteAddressButton() {
+        if (!form.getValues('addressID'))
+            return null
+
+        return (
+            <Button
+                disabled={isLoading}
+                color={theme.colors.error}
+                onPress={deleteAddress}
+                labelStyle={{ color: 'white' }}
+                style={{ marginVertical: 8, borderRadius: 24, marginHorizontal: 32 }}
+                contentStyle={{ height: 48 }}
+                mode='contained'>
+                Șterge adresa
+            </Button>
+        )
+    }
+
     if (!isLoaded(profileContext.addresses))
         return <ActivityIndicator color={theme.colors.primary} animating={true} size='large' />
 
@@ -69,6 +100,7 @@ export default function ProfileAddressesView() {
                 >
                     Actualizează datele
             </Button>
+                <DeleteAddressButton />
             </ScrollView>
         </KeyboardAvoidingView>
     )

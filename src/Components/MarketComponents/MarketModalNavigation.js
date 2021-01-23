@@ -28,6 +28,7 @@ export default function MarketModalNavigation(props) {
     }
 
     return (
+
         <MarketModalStack.Navigator mode='modal' screenOptions={stackHeaderStyle}>
             <MarketModalStack.Screen name='MarketStack' component={MarketStackNavigation} options={{ headerShown: false }} />
             <MarketModalStack.Screen name='FilterModal' component={FilterModal} options={headerActions} />

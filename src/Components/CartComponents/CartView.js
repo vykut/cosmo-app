@@ -7,6 +7,7 @@ import { useNavigation, useRoute } from '@react-navigation/native';
 import { isEmpty, isLoaded } from 'react-redux-firebase'
 import { useSelector } from 'react-redux'
 import BottomSurface from '../AuxiliaryComponents/BottomSurface'
+import ClosedStoreBanner from '../AuxiliaryComponents/ClosedStoreBanner'
 
 
 export default function CartView() {
@@ -33,6 +34,7 @@ export default function CartView() {
 
     return (
         <View style={{ flex: 1 }}>
+            <ClosedStoreBanner />
 
             <ProductsList />
 
@@ -46,7 +48,7 @@ export default function CartView() {
                     style={{ borderRadius: 24, marginTop: 16 }}
                     icon='chevron-right'
                     onPress={goToOrderDetails}
-                    disabled={!cart?.quantity}
+                    disabled={!cart?.quantity || !cart?.cosmoMarketStore?.isOpen}
                 >
                     Continuă
                         </Button>
