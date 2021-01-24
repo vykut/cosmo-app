@@ -27,8 +27,14 @@ export default function ProfileProvider({ children }) {
     })
 
     const addresses = useSelector(
-        ({ firestore }) => firestore.data.addresses && Object.entries(firestore.data.addresses).filter(x => x[1])
-            .map((address) => { return { id: address[0], data: address[1] } })
+        ({ firestore }) => {
+            const addresses = firestore.data.addresses
+            if (isEmpty(addresses))
+                return null
+
+            return Object.entries(addresses).filter(x => x[1]?.label)
+                .map((address) => { return { id: address[0], data: address[1] } })
+        }
     )
 
     const getAddressByID = (addressID) => addresses?.find(x => x.id === addressID)

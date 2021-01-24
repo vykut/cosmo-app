@@ -25,6 +25,6 @@ export default function MarketView() {
 
 const styles = StyleSheet.create({
     mainContainer: {
-
+        flex: 1
     },
 });

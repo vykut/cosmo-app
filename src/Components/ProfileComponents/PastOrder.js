@@ -3,16 +3,12 @@ import { View, Text, ScrollView } from 'react-native'
 import { useFirestoreConnect, isEmpty } from 'react-redux-firebase'
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { useSelector } from 'react-redux'
-import { useMarketContext } from '../contexts/MarketContext';
 import { DataTable, Subheading, Title } from 'react-native-paper'
-import { useProfileContext } from '../contexts/ProfileContext';
 import ProductsInOrderList from '../ProductComponents/ProductsInOrderList';
 
 
 export default function PastOrder() {
     const route = useRoute()
-    const marketContext = useMarketContext()
-    const profileContext = useProfileContext()
 
     const order = route.params?.order
 
@@ -39,9 +35,7 @@ export default function PastOrder() {
         }
     )
 
-
     console.log(order)
-
 
     return (
         <View style={{ flex: 1 }}>

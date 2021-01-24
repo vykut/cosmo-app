@@ -29,7 +29,7 @@ export default function OrdersHistoryView() {
 
     return (
         <View style={{ flex: 1 }}>
-            <DataTable>
+            <DataTable style={{ flex: 1 }}>
                 <DataTableHeader />
                 <ScrollView style={{ height: '100%' }}>
                     {pastOrders.map((order) => {

@@ -33,8 +33,6 @@ export default function OrderDetailsView() {
         }
     }
 
-
-
     if (!isLoaded(order))
         return <Title style={{ textAlign: 'center' }}>Se încarcă comanda...</Title>
 

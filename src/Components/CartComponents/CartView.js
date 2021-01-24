@@ -48,7 +48,7 @@ export default function CartView() {
                     style={{ borderRadius: 24, marginTop: 16 }}
                     icon='chevron-right'
                     onPress={goToOrderDetails}
-                    disabled={!cart?.quantity || !cart?.cosmoMarketStore?.isOpen}
+                    disabled={!cart?.quantity || !cartContext?.cosmoMarketStore?.isOpen}
                 >
                     Continuă
                         </Button>

@@ -26,8 +26,10 @@ export default function OrderProvider({ children }) {
                 collection: 'orders',
                 where: [['userID', '==', auth.uid]],
                 orderBy: [['createdAt', 'desc']],
-                storeAs: ordersStoreAs
-            }, { collection: 'users' }, { collection: 'addresses' }]
+                storeAs: ordersStoreAs,
+                populates
+            },
+            ]
     })
 
 
@@ -49,9 +51,9 @@ export default function OrderProvider({ children }) {
                 where: [['userID', '==', auth?.uid], ['state', 'in', ['pending', 'assigned']]],
                 orderBy: [['createdAt', 'desc']],
                 limit: 1,
-                storeAs: orderStoreAs
+                storeAs: orderStoreAs,
+                populates
             },
-            { collection: 'users' },
             ]
     })
 

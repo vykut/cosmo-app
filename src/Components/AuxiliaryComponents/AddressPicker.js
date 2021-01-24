@@ -17,7 +17,7 @@ export default function AddressPicker(form) {
         return { label: 'Adresă nouă', value: 'new' }
     }, [])
 
-    const addresses = profileContext.addresses?.map((address) => { return { label: address.data.label, value: address.id } }) || []
+    const addresses = profileContext.addresses?.map((address) => { console.log(address); return { label: address.data.label, value: address.id } }) || []
     // const items = addresses && [...addresses, initialItem]
 
     return (

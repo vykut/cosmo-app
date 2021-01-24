@@ -53,7 +53,7 @@ export default function ProductRow({ product }) {
                     <View style={styles.leftRow}>
                         <Image source={{ uri: mergedProduct.data.image }} style={styles.image} />
                         <View style={styles.titleContainer}>
-                            <Subheading style={{ marginRight: 8 }}>{mergedProduct.data.name}</Subheading>
+                            <Subheading numberOfLines={3}>{mergedProduct.data.name}</Subheading>
                             <Title>{mergedProduct.data.totalPrice.toFixed(2)} RON</Title>
                         </View>
                     </View>
@@ -87,5 +87,8 @@ const styles = StyleSheet.create({
         resizeMode: 'contain',
         width: 40,
         height: 40,
+    },
+    titleContainer: {
+        flex: 1,
     },
 })
