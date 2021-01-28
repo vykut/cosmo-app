@@ -23,6 +23,22 @@ export default function ProfileView() {
                 title: 'Istoric comenzi',
                 action: () => navigation.navigate('OrdersHistory')
             },
+            {
+                title: 'Termeni și condiții',
+                action: () => navigation.navigate('CosmoMarketWebView', { url: 'termeni-si-conditii', title: 'Termeni și condiții' })
+            },
+            {
+                title: 'Politica cookie',
+                action: () => navigation.navigate('CosmoMarketWebView', { url: 'politica-cookie', title: 'Politica cookie' })
+            },
+            {
+                title: 'GDPR',
+                action: () => navigation.navigate('CosmoMarketWebView', { url: 'gdpr', title: 'GDPR' })
+            },
+            {
+                title: 'Despre noi',
+                action: () => navigation.navigate('CosmoMarketWebView', { url: 'despre-noi', title: 'Despre noi' })
+            },
         ]
     }, [navigation])
 

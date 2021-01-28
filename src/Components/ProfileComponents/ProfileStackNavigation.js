@@ -12,6 +12,7 @@ import PersonalDataView from './PersonalDataView';
 import ProfileAddressesView from './ProfileAddressesView';
 import OrdersHistoryView from './OrdersHistoryView';
 import PastOrder from './PastOrder';
+import CosmoMarketWebView from './CosmoMarketWebView';
 
 const ProfileStack = createStackNavigator();
 
@@ -42,6 +43,7 @@ export default function ProfileStackNavigation() {
                     <ProfileStack.Screen name="PastOrder" component={PastOrder} options={{ title: 'Detalii comandă' }} />
                 </>
             }
+            <ProfileStack.Screen name='CosmoMarketWebView' component={CosmoMarketWebView} />
         </ProfileStack.Navigator>
     )
 }

@@ -6,6 +6,7 @@ import 'firebase/storage'
 import { firebaseConfig } from './FirebaseConfig'
 import { DefaultTheme } from '@react-navigation/native';
 
+export const cosmoMarketWebsiteURL = 'https://cosmo-market.web.app'
 
 
 export const app = firebase.initializeApp(firebaseConfig)
