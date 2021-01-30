@@ -1,6 +1,6 @@
-import React, { useEffect, useLayoutEffect, useState } from 'react'
-import { View, Text, ScrollView, KeyboardAvoidingView, Platform, Pressable } from 'react-native'
-import { Link, useNavigation, useRoute } from '@react-navigation/native';
+import React, { useLayoutEffect, useState } from 'react'
+import { View, ScrollView, KeyboardAvoidingView, Platform } from 'react-native'
+import { useNavigation } from '@react-navigation/native';
 import TitleSurface from '../AuxiliaryComponents/TitleSurface';
 import AddressPicker from '../AuxiliaryComponents/AddressPicker';
 import PaymentType from './PaymentType';
