@@ -50,7 +50,7 @@ export default function ProductsView() {
     }
 
     if (products.length && route.params.searchQuery) {
-        products = products.filter((product) => product.data && product.data.name.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").includes(route.params.searchQuery))
+        products = products.filter((product) => product.data && product.data.name.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").includes(route.params.searchQuery.toLowerCase()))
     }
 
     if (route.params.sort) {

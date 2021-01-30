@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { View, Text, ScrollView } from 'react-native'
+import { View, Text, ScrollView, Linking } from 'react-native'
 import { Headline, Title, Subheading, Paragraph, Button, useTheme } from 'react-native-paper'
 import BottomSurface from '../AuxiliaryComponents/BottomSurface'
 import { isEmpty, isLoaded } from 'react-redux-firebase';
@@ -44,7 +44,9 @@ export default function OrderDetailsView() {
             <ScrollView style={{ padding: 8 }} >
                 {order?.data?.riderID ? <View style={{ marginVertical: 8 }}>
                     <Subheading>{`Comanda a fost preluată de ${order?.data?.rider?.firstName} și este în drum spre tine.`}</Subheading>
-                    <Subheading>{`Îl poți contacta pe ${order?.data?.rider?.firstName} la numărul de telefon ${order?.data?.rider?.phone}.`}</Subheading>
+                    <Subheading>
+                        Îl poți contacta pe {order?.data?.rider?.firstName} la numărul de telefon <Subheading style={{ color: theme.colors.primary, textDecorationLine: 'underline' }} onPress={() => Linking.openURL(`tel:${order?.data?.rider?.phone || ''}`)}>{order?.data?.rider?.phone || ''}</Subheading>.
+                    </Subheading>
                 </View> :
                     <View style={{ marginVertical: 8 }}>
                         <Headline style={{ textAlign: 'center' }}>Mulțumim, {profile?.firstName}!</Headline>
