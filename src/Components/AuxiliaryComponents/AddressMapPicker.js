@@ -46,6 +46,7 @@ export default function AddressMapPicker({ control, setValue }) {
                             showsIndoors={false}
                             rotateEnabled={false}
                             pitchEnabled={false}
+                            mapType='hybrid'
                             showsIndoorLevelPicker={false}
                             style={{ width: 'auto', height: 300, borderRadius: 8 }}
                             onRegionChangeComplete={async (coords) => {

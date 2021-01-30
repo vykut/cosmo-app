@@ -7,6 +7,7 @@ import OrderDetailsView from './OrderDetailsView';
 import { IconButton, useTheme } from 'react-native-paper'
 import { useSelector } from 'react-redux'
 import { isEmpty } from 'react-redux-firebase'
+import CosmoMarketWebView from '../ProfileComponents/CosmoMarketWebView';
 
 const CartStack = createStackNavigator();
 
@@ -31,6 +32,7 @@ export default function CartStackNavigation() {
                     {!isEmpty(auth) && <CartStack.Screen name="OrderReview" component={ReviewOrderView} />}
                 </>
             }
+            <CartStack.Screen name='CosmoMarketWebView' component={CosmoMarketWebView} />
         </CartStack.Navigator>
     )
 }

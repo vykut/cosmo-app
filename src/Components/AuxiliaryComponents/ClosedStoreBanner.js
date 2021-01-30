@@ -9,8 +9,6 @@ export default function ClosedStoreBanner() {
     const store = cartContext.cosmoMarketStore
     const theme = useTheme()
 
-
-
     if (!store?.isOpen)
         return (
             <Card elevation={1} style={{ marginHorizontal: 8, marginTop: 8, backgroundColor: theme.colors.error }}>

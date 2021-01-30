@@ -1,13 +1,13 @@
 import React, { useEffect, useLayoutEffect, useState } from 'react'
-import { View, Text, ScrollView, KeyboardAvoidingView, Platform } from 'react-native'
-import { useNavigation, useRoute } from '@react-navigation/native';
+import { View, Text, ScrollView, KeyboardAvoidingView, Platform, Pressable } from 'react-native'
+import { Link, useNavigation, useRoute } from '@react-navigation/native';
 import TitleSurface from '../AuxiliaryComponents/TitleSurface';
 import AddressPicker from '../AuxiliaryComponents/AddressPicker';
 import PaymentType from './PaymentType';
 import OrderNotes from './OrderNotes';
 import { useForm } from "react-hook-form";
 import OrderTotal from './OrderTotal';
-import { Button, useTheme } from 'react-native-paper'
+import { Button, Paragraph, useTheme } from 'react-native-paper'
 import { useCartContext } from '../contexts/CartContext';
 import ContactInformation from './ContactInformation';
 
@@ -78,6 +78,19 @@ export default function ReviewOrderView() {
                 <TitleSurface title='Subtotal'>
                     <OrderTotal />
                 </TitleSurface>
+                <Paragraph style={{ marginBottom: 8 }}>
+                    Prin trimiterea comenzii, ești de acord cu <Paragraph
+                        style={{ textDecorationLine: 'underline', color: theme.colors.primary }}
+                        onPress={() => navigation.navigate('CosmoMarketWebView', { url: 'termeni-si-conditii', title: 'Termeni și condiții' })}
+                    >
+                        Termenii și condițiile
+                        </Paragraph>  și cu <Paragraph
+                        style={{ textDecorationLine: 'underline', color: theme.colors.primary }}
+                        onPress={() => navigation.navigate('CosmoMarketWebView', { url: 'gdpr', title: 'GDPR' })}
+                    >
+                        politica GDPR
+                        </Paragraph>
+                </Paragraph>
                 <Button
                     mode='contained'
                     color={theme.colors.primary}
