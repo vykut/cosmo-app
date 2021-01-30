@@ -1,6 +1,6 @@
 import React, { useLayoutEffect, useState } from 'react'
 import { View, StyleSheet, SafeAreaView, ScrollView } from 'react-native'
-import { IconButton, Text, useTheme } from 'react-native-paper'
+import { Button, IconButton, Text, useTheme } from 'react-native-paper'
 import CategoriesRow from './CategoriesRow';
 import { useMarketContext } from '../contexts/MarketContext';
 import ProductsRow from '../ProductComponents/ProductsRow';
@@ -17,7 +17,9 @@ export default function MarketView() {
 
     useLayoutEffect(() => {
         navigation.setOptions({
-            headerRight: () => <IconButton icon='information-outline' color={theme.colors.accent} onPress={() => setModalVisible(true)} />
+            headerRight: () => <Button mode='text' labelStyle={{ color: theme.colors.accent, textTransform: 'none' }} onPress={() => setModalVisible(true)} >
+                Contact
+            </Button>
         })
     })
 
