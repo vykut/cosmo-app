@@ -29,6 +29,7 @@ const rrfConfig = {
 const firebaseApp = app
 
 firebase.firestore()
+firebase.analytics();
 
 // Add firebase to reducers
 const rootReducer = combineReducers({

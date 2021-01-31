@@ -5,6 +5,6 @@ export const firebaseConfig = {
     projectId: 'cosmo-market',
     storageBucket: 'cosmo-market.appspot.com',
     messagingSenderId: '567087731440',
-    appId: '1:567087731440:web:5beb7e2ad0efaf2aefe835',
-    measurementId: 'G-K6Q2VPXDMB'
+    appId: '1:567087731440:web:6ed98a0c43487eafefe835',
+    measurementId: 'G-XFRWB171WC'
 }

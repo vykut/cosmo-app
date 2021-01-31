@@ -30,7 +30,7 @@ export default function ProductsView() {
     }, [navigation, products, route.params, theme])
 
     // set screen title
-    useEffect(() => {
+    useLayoutEffect(() => {
         if (route.params.currentCategory) {
             navigation.setOptions({ title: route.params.currentCategory.data.name })
         } else {
@@ -81,9 +81,9 @@ export default function ProductsView() {
                 break
             case 5:
                 products.sort((a, b) => {
-                    if (a.data.name < b.data.name)
+                    if (a?.data?.name?.toLowerCase() < b?.data?.name?.toLowerCase())
                         return 1
-                    if (a.data.name > b.data.name)
+                    if (a?.data?.name?.toLowerCase() > b?.data?.name?.toLowerCase())
                         return -1
                     return 0
                 })
